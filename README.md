@@ -49,6 +49,35 @@ docker exec -i exclusive-arc-sql-example kill -TERM
 
 ## Schema
 
+### Data tables
+
+- [`quotation_p`](./docker-entrypoint-initdb.d/00-schemata.sql)
+- [`paragraph`](./docker-entrypoint-initdb.d/00-schemata.sql)
+- [`sentence`](./docker-entrypoint-initdb.d/00-schemata.sql)
+- [`word`](./docker-entrypoint-initdb.d/00-schemata.sql)
+
+### User views
+
+-[`quotation`](./docker-entrypoint-initdb.d/01-views.sql)
+
 ## Expected output
+
+```
+Raw data ('quotation_p'):
+ key | value | paragraph_id | sentence_id | word_id 
+-----+-------+--------------+-------------+---------
+ abc |     1 |            1 |             |        
+ def |     2 |              |           1 |        
+ ghi |     3 |              |             |       1
+(3 rows)
+
+User view ('quotation'):
+ key | value | text_type | text_id 
+-----+-------+-----------+---------
+ abc |     1 | PARAGRAPH |       1
+ def |     2 | SENTENCE  |       1
+ ghi |     3 | WORD      |       1
+(3 rows)
+```
 
 ## Reading
