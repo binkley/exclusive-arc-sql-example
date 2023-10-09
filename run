@@ -81,4 +81,10 @@ SELECT *
 FROM example_p;
 EOSQL
 
+echo "User view ('example'):"
+docker exec -i "$name" psql -n -U "$user" <<EOSQL
+SELECT *
+FROM example;
+EOSQL
+
 docker exec "$name" kill -TERM 1
