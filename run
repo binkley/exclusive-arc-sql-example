@@ -75,16 +75,16 @@ while ! docker exec "$name" pg_isready -q -d "$user" -U "$user"; do
     sleep 1
 done
 
-echo "Raw data ('example_p'):"
+echo "Raw data ('quotation_p'):"
 docker exec -i "$name" psql -n -U "$user" <<EOSQL
 SELECT *
-FROM example_p;
+FROM quotation_p;
 EOSQL
 
-echo "User view ('example'):"
+echo "User view ('quotation'):"
 docker exec -i "$name" psql -n -U "$user" <<EOSQL
 SELECT *
-FROM example;
+FROM quotation;
 EOSQL
 
 docker exec "$name" kill -TERM 1
