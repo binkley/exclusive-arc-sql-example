@@ -66,8 +66,8 @@ Using `./run -f` in a terminal shows you the problems encountered by Postgres.
 
 User views are _read-only_.
 
--[`quotation`](./docker-entrypoint-initdb.d/01-views.sql)
--[`quotation_expanded`](./docker-entrypoint-initdb.d/01-views.sql)
+- [`quotation`](./docker-entrypoint-initdb.d/01-views.sql)
+- [`quotation_expanded`](./docker-entrypoint-initdb.d/01-views.sql)
 
 ## Expected output
 
