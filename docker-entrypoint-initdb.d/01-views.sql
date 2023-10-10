@@ -8,7 +8,8 @@ SELECT key                                          AS KEY,
                CASE WHEN word_id IS NOT NULL THEN 'WORD' ELSE NULL END
        )                                            AS TEXT_TYPE,
        COALESCE(paragraph_id, sentence_id, word_id) AS TEXT_ID
-FROM quotation_p;
+FROM quotation_p
+UNION ALL SELECT '0', 0, '0', 0 WHERE 1 = 0;
 
 CREATE VIEW quotation_expanded
 AS
@@ -20,4 +21,5 @@ SELECT key AS KEY,
 FROM quotation_p q
 LEFT JOIN paragraph p ON p.id = q.paragraph_id
 LEFT JOIN sentence s ON s.id = q.sentence_id
-LEFT JOIN word w ON w.id = q.word_id;
+LEFT JOIN word w ON w.id = q.word_id
+UNION ALL SELECT '0', 0, 0, 0, 0 WHERE 1 = 0;
