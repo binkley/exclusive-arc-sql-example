@@ -97,4 +97,17 @@ User view ('quotation_expanded'):
 (3 rows)
 ```
 
-## Reading
+## Discussion
+
+There are several approaches to realizing _exclusive arcs_ in SQL.
+[_Modeling Polymorphic Associations in a Relational
+Database_](https://hashrocket.com/blog/posts/modeling-polymorphic-associations-in-a-relational-database#exclusive-belongs-to-aka-exclusive-arc-)
+is a good discussion.
+However, the focus on polymorphism makes sense for several common cases, but
+while useful for technical implementation, misses the use case of exclusive arc
+for "contains" or hierarchical relationships.
+
+In the example schema, a "word" is contained in a "sentence" is contained in a
+"paragraph", but a "quotation" may refer to any of these.
+One of the other design patterns might make more sense were there to be 
+specialized kinds of quotations depending on the referent.
