@@ -9,3 +9,15 @@ SELECT key                                          AS KEY,
        )                                            AS TEXT_TYPE,
        COALESCE(paragraph_id, sentence_id, word_id) AS TEXT_ID
 FROM quotation_p;
+
+CREATE VIEW quotation_expanded
+AS
+SELECT key AS KEY,
+       value AS VALUE,
+       p.indentation AS INDENTATION,
+       s.clauses AS CLAUSES,
+       w.length AS LENGTH
+FROM quotation_p q
+LEFT JOIN paragraph p ON p.id = q.paragraph_id
+LEFT JOIN sentence s ON s.id = q.sentence_id
+LEFT JOIN word w ON w.id = q.word_id;

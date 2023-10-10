@@ -87,4 +87,10 @@ SELECT *
 FROM quotation;
 EOSQL
 
+echo "User view ('quotation_expanded'):"
+docker exec -i "$name" psql -n -U "$user" <<EOSQL
+SELECT *
+FROM quotation_expanded;
+EOSQL
+
 docker exec "$name" kill -TERM 1

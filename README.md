@@ -84,6 +84,14 @@ User view ('quotation'):
  def |     2 | SENTENCE  |      12
  ghi |     3 | WORD      |       1
 (3 rows)
+
+User view ('quotation_expanded'):
+ key | value | indentation | clauses | length
+-----+-------+-------------+---------+--------
+ abc |     1 |           3 |         |
+ def |     2 |             |       1 |
+ ghi |     3 |             |         |     42
+(3 rows)
 ```
 
 ## Reading
