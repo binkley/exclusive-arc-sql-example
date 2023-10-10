@@ -37,7 +37,7 @@ To explore the schema and data, start Postgres in _foreground_ mode:
 ```
 $ ./run -f
 ```
-And in another terminal, connect with `psql`:
+And in another terminal, connect with `psql` or an IDE or other tool:
 ```
 $ docker exec -it exclusive-arc-sql-example psql -U test
 > -- this is an interactive PSQL session
@@ -46,6 +46,12 @@ When finished, either interrupt Postgres (`^C`) or shut it down with Docker:
 ```
 docker exec -i exclusive-arc-sql-example kill -TERM 
 ```
+
+### Development tip
+
+When editing SQL files, if there are mistakes, the Docker container doesn't 
+start cleanly.
+Using `./run -f` in a terminal shows you the problems encountered by Postgres.
 
 ## Schema
 
@@ -66,16 +72,16 @@ docker exec -i exclusive-arc-sql-example kill -TERM
 Raw data ('quotation_p'):
  key | value | paragraph_id | sentence_id | word_id 
 -----+-------+--------------+-------------+---------
- abc |     1 |            1 |             |        
- def |     2 |              |           1 |        
+ abc |     1 |           99 |             |        
+ def |     2 |              |          12 |        
  ghi |     3 |              |             |       1
 (3 rows)
 
 User view ('quotation'):
  key | value | text_type | text_id 
 -----+-------+-----------+---------
- abc |     1 | PARAGRAPH |       1
- def |     2 | SENTENCE  |       1
+ abc |     1 | PARAGRAPH |      99
+ def |     2 | SENTENCE  |      12
  ghi |     3 | WORD      |       1
 (3 rows)
 ```
