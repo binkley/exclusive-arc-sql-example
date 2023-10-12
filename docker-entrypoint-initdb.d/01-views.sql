@@ -19,10 +19,10 @@ SELECT Q.key         AS KEY,
        H.adverbs     AS ADVERBS,
        W.length      AS LENGTH
 FROM quotation_p Q
-         LEFT JOIN paragraph P ON P.id = Q.paragraph_id
-         LEFT JOIN sentence S ON S.id = Q.sentence_id
-         LEFT JOIN phrase H ON H.id = Q.phrase_id
-         LEFT JOIN word W ON W.id = Q.word_id
+         LEFT JOIN paragraph_data P ON P.id = Q.paragraph_id
+         LEFT JOIN sentence_data S ON S.id = Q.sentence_id
+         LEFT JOIN phrase_data H ON H.id = Q.phrase_id
+         LEFT JOIN word_data W ON W.id = Q.word_id
 -- One way to performantly ensure read-only without using roles
 UNION ALL
 SELECT '0', 0, '0', 0, 0, 0, 0, 0

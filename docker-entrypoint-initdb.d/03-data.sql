@@ -1,14 +1,14 @@
-INSERT INTO paragraph (id, indentation)
+INSERT INTO paragraph_data (id, indentation)
 VALUES (99, 3);
 
-INSERT INTO sentence (id, paragraph_id, clauses)
+INSERT INTO sentence_data (id, paragraph_id, clauses)
 VALUES (12, 99, 1);
 
-INSERT INTO phrase (id, sentence_id, adverbs)
+INSERT INTO phrase_data (id, sentence_id, adverbs)
 VALUES (7, 12, 2);
 
-INSERT INTO word (id, phrase_id, length)
-VALUES (1, 7, 42);
+INSERT INTO word_data (id, phrase_id, text, length)
+VALUES (1, 7, 'apple', 42);
 
 INSERT INTO quotation_p
     (key, value, paragraph_id, sentence_id, phrase_id, word_id)
