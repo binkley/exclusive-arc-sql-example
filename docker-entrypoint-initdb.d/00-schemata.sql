@@ -7,36 +7,36 @@ CREATE TABLE paragraph_data
 
 CREATE TABLE sentence_data
 (
-    id                INTEGER NOT NULL,
+    id           INTEGER NOT NULL,
     paragraph_id INTEGER NOT NULL,
-    clauses           INTEGER NOT NULL,
+    clauses      INTEGER NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (paragraph_id) REFERENCES paragraph_data (id)
 );
 
 CREATE TABLE phrase_data
 (
-    id               INTEGER NOT NULL,
+    id          INTEGER NOT NULL,
     sentence_id INTEGER NOT NULL,
-    adverbs          INTEGER NOT NULL,
+    adverbs     INTEGER NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (sentence_id) REFERENCES sentence_data (id)
 );
 
 CREATE TABLE word_data
 (
-    id             INTEGER NOT NULL,
+    id        INTEGER NOT NULL,
     phrase_id INTEGER NOT NULL,
-    text           TEXT    NOT NULL,
-    length         INTEGER NOT NULL,
+    text      TEXT    NOT NULL,
+    length    INTEGER NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (phrase_id) REFERENCES phrase_data (id)
 );
 
 CREATE TABLE quotation_p
 (
-    key               TEXT    NOT NULL,
-    value             INTEGER NOT NULL,
+    key          TEXT    NOT NULL,
+    value        INTEGER NOT NULL,
     paragraph_id INT     NULL,
     sentence_id  INT     NULL,
     phrase_id    INT     NULL,
