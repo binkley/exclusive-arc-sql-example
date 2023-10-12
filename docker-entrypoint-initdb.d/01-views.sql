@@ -1,22 +1,32 @@
 CREATE VIEW quotation_expanded
 AS
-SELECT Q.key           AS KEY,
-       Q.value         AS VALUE,
+SELECT Q.key         AS KEY,
+       Q.value       AS VALUE,
        COALESCE(
            CASE WHEN Q.paragraph_id IS NOT NULL THEN 'PARAGRAPH' ELSE NULL END,
            CASE WHEN Q.sentence_id IS NOT NULL THEN 'SENTENCE' ELSE NULL END,
+           CASE WHEN Q.phrase_id IS NOT NULL THEN 'PHRASE' ELSE NULL END,
            CASE WHEN Q.word_id IS NOT NULL THEN 'WORD' ELSE NULL END
        )             AS TEXT_TYPE,
-       COALESCE(Q.paragraph_id, Q.sentence_id, Q.word_id) AS TEXT_ID,
+       COALESCE(
+           Q.paragraph_id,
+           Q.sentence_id,
+           Q.phrase_id,
+           Q.word_id
+       )             AS TEXT_ID,
        P.indentation AS INDENTATION,
        S.clauses     AS CLAUSES,
+       H.adverbs     AS ADVERBS,
        W.length      AS LENGTH
 FROM quotation_p Q
-LEFT JOIN paragraph P ON P.id = Q.paragraph_id
-LEFT JOIN sentence S ON S.id = Q.sentence_id
-LEFT JOIN word W ON W.id = Q.word_id
+         LEFT JOIN paragraph P ON P.id = Q.paragraph_id
+         LEFT JOIN sentence S ON S.id = Q.sentence_id
+         LEFT JOIN phrase H ON H.id = Q.phrase_id
+         LEFT JOIN word W ON W.id = Q.word_id
 -- One way to performantly ensure read-only without using roles
-UNION ALL SELECT '0', 0, '0', 0, 0, 0, 0 WHERE 1 = 0;
+UNION ALL
+SELECT '0', 0, '0', 0, 0, 0, 0, 0
+WHERE 1 = 0;
 
 CREATE VIEW quotation
 AS
