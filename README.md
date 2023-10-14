@@ -68,33 +68,75 @@ User views are _read-only_.
 
 - [`quotation`](./docker-entrypoint-initdb.d/01-views.sql)
 - [`quotation_expanded`](./docker-entrypoint-initdb.d/01-views.sql)
+- [`paragraph`](./docker-entrypoint-initdb.d/01-views.sql)
+- [`sentence`](./docker-entrypoint-initdb.d/01-views.sql)
+- [`phrase`](./docker-entrypoint-initdb.d/01-views.sql)
+- [`word`](./docker-entrypoint-initdb.d/01-views.sql)
 
 ## Expected output
 
 ```
 Raw data ('quotation_p'):
- key | value | paragraph_id | sentence_id | word_id 
------+-------+--------------+-------------+---------
- abc |     1 |           99 |             |        
- def |     2 |              |          12 |        
- ghi |     3 |              |             |       1
-(3 rows)
+ key | value | paragraph_id | sentence_id | phrase_id | word_id
+-----+-------+--------------+-------------+-----------+---------
+ abc |     1 |         9000 |             |           |
+ def |     2 |              |         900 |           |
+ ghi |     3 |              |             |        90 |
+ jkl |     3 |              |             |           |       4
+(4 rows)
 
 User view ('quotation'):
- key | value | text_type | text_id 
+ key | value | text_type | text_id
 -----+-------+-----------+---------
- abc |     1 | PARAGRAPH |      99
- def |     2 | SENTENCE  |      12
- ghi |     3 | WORD      |       1
-(3 rows)
+ abc |     1 | PARAGRAPH |    9000
+ def |     2 | SENTENCE  |     900
+ ghi |     3 | PHRASE    |      90
+ jkl |     3 | WORD      |       4
+(4 rows)
 
 User view ('quotation_expanded'):
- key | value | indentation | clauses | length
------+-------+-------------+---------+--------
- abc |     1 |           3 |         |
- def |     2 |             |       1 |
- ghi |     3 |             |         |     42
-(3 rows)
+ key | value | text_type | text_id | indentation | clauses | adverbs | length
+-----+-------+-----------+---------+-------------+---------+---------+--------
+ abc |     1 | PARAGRAPH |    9000 |           3 |         |         |
+ def |     2 | SENTENCE  |     900 |             |       1 |         |
+ ghi |     3 | PHRASE    |      90 |             |         |       2 |
+ jkl |     3 | WORD      |       4 |             |         |         |     42
+(4 rows)
+
+User view ('word'):
+ id |  text
+----+--------
+  1 | apple
+  2 | pie
+  3 | banana
+  4 | split
+  5 | carrot
+  6 | cake
+  7 | date
+  8 | roll
+(8 rows)
+
+User view ('phrase'):
+ id |     text
+----+--------------
+ 60 | apple pie
+ 70 | banana split
+ 80 | carrot cake
+ 90 | date roll
+(4 rows)
+
+User view ('sentence'):
+ id  |          text
+-----+-------------------------
+ 800 | apple pie, banana split
+ 900 | carrot cake, date roll
+(2 rows)
+
+User view ('paragraph'):
+  id  |                      text
+------+-------------------------------------------------
+ 9000 | apple pie, banana split. carrot cake, date roll
+(1 row)
 ```
 
 ## Discussion
@@ -107,7 +149,8 @@ However, the focus on polymorphism makes sense for several common cases, but
 while useful for technical implementation, misses the use case of exclusive arc
 for "contains" or hierarchical relationships.
 
-In the example schema, a "word" is contained in a "sentence" is contained in a
-"paragraph", but a "quotation" may refer to any of these.
+In the example schema, a "word" is contained in a "phrase" is contained in a 
+"sentence" is contained in a "paragraph", but a "quotation" may refer to any 
+of these.
 One of the other design patterns might make more sense were there to be 
 specialized kinds of quotations depending on the referent.
