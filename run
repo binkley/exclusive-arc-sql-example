@@ -93,4 +93,28 @@ SELECT *
 FROM quotation_expanded;
 EOSQL
 
+echo "User view ('word'):"
+docker exec -i "$name" psql -n -U "$user" <<EOSQL
+SELECT *
+FROM word;
+EOSQL
+
+echo "User view ('phrase'):"
+docker exec -i "$name" psql -n -U "$user" <<EOSQL
+SELECT *
+FROM phrase;
+EOSQL
+
+echo "User view ('sentence'):"
+docker exec -i "$name" psql -n -U "$user" <<EOSQL
+SELECT *
+FROM sentence;
+EOSQL
+
+echo "User view ('paragraph'):"
+docker exec -i "$name" psql -n -U "$user" <<EOSQL
+SELECT *
+FROM paragraph;
+EOSQL
+
 docker exec "$name" kill -TERM 1

@@ -1,3 +1,31 @@
+CREATE VIEW word
+AS
+SELECT W.id, W.text
+FROM word_data W;
+
+CREATE VIEW phrase
+AS
+SELECT H.id AS id, string_agg(W.text, ' ' ORDER BY W.id) AS text
+FROM phrase_data H
+         JOIN word_data W ON H.id = W.phrase_id
+GROUP BY H.id;
+
+CREATE VIEW sentence
+AS
+SELECT S.id AS id, string_agg(HH.text, ', ' ORDER BY HH.id) AS text
+FROM sentence_data S
+         JOIN phrase_data H ON S.id = H.sentence_id
+         JOIN phrase HH ON H.id = HH.id
+GROUP BY S.id;
+
+CREATE VIEW paragraph
+AS
+SELECT P.id AS id, string_agg(SS.text, '. ' ORDER BY SS.id) AS text
+FROM paragraph_data P
+         JOIN sentence_data S ON P.id = S.paragraph_id
+         JOIN sentence SS ON S.id = SS.id
+GROUP BY P.id;
+
 CREATE VIEW quotation_expanded
 AS
 SELECT Q.key         AS KEY,
